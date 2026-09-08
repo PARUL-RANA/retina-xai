@@ -11,21 +11,17 @@ const VIDEO_MASK =
 export default function Retina3D() {
   return (
     <motion.div
-      className="relative flex w-full items-center justify-center"
+      className="relative flex w-full items-center justify-center md:justify-start"
       initial={{ opacity: 0, scale: 0.98 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       aria-label="Retinal visualization"
     >
       <div
-        className="relative flex w-full max-w-[min(100%,620px)] items-center justify-center overflow-hidden"
-        style={{
-          aspectRatio: "16 / 14",
-          minHeight: "clamp(280px, 52vw, 540px)",
-        }}
+        className="relative aspect-square w-[min(86vw,400px)] max-w-full overflow-hidden md:w-[clamp(280px,34vw,480px)] lg:w-[clamp(320px,38vw,560px)]"
       >
         <video
-          className="h-full w-full object-contain"
+          className="absolute inset-0 h-full w-full object-cover"
           src="/videos/retina-hero.mp4"
           autoPlay
           muted

@@ -21,10 +21,19 @@ const fadeUp = {
 export default function Hero() {
   return (
     <section className="relative overflow-hidden border-b border-border/60">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_20%_20%,oklch(0.78_0.12_195_/0.08),transparent_45%),radial-gradient(ellipse_at_80%_30%,oklch(0.62_0.16_290_/0.07),transparent_40%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-transparent" />
 
-      <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8 lg:py-24">
-        <div className="min-w-0">
+      <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-4 py-16 sm:gap-12 sm:px-6 md:grid-cols-2 md:gap-14 lg:gap-20 lg:px-8 lg:py-24">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.96 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+          className="relative flex w-full min-w-0 items-center justify-center md:justify-start"
+        >
+          <Retina3D />
+        </motion.div>
+
+        <div className="min-w-0 text-center md:text-left">
           <motion.p
             custom={0}
             variants={fadeUp}
@@ -40,7 +49,7 @@ export default function Hero() {
             variants={fadeUp}
             initial="hidden"
             animate="visible"
-            className="max-w-xl text-4xl font-semibold tracking-tight text-foreground sm:text-5xl lg:text-[3.4rem] lg:leading-[1.08]"
+            className="mx-auto max-w-xl text-4xl font-semibold tracking-tight text-foreground sm:text-5xl md:mx-0 lg:text-[3.4rem] lg:leading-[1.08]"
           >
             SEE WHAT THE AI SEES.
           </motion.h1>
@@ -50,7 +59,7 @@ export default function Hero() {
             variants={fadeUp}
             initial="hidden"
             animate="visible"
-            className="mt-5 max-w-md text-base leading-relaxed text-muted-foreground sm:text-lg"
+            className="mx-auto mt-5 max-w-md text-base leading-relaxed text-muted-foreground sm:text-lg md:mx-0"
           >
             Explainable retinal intelligence for accessible diabetic retinopathy screening.
           </motion.p>
@@ -60,10 +69,10 @@ export default function Hero() {
             variants={fadeUp}
             initial="hidden"
             animate="visible"
-            className="mt-8 flex flex-wrap gap-3"
+            className="mt-8 flex flex-wrap justify-center gap-3 md:justify-start"
           >
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-              <Button size="lg" nativeButton={false} render={<Link to="/analysis" />} className="glow-cyan px-5 tracking-wide">
+              <Button size="lg" nativeButton={false} render={<Link to="/login" />} className="glow-cyan px-5 tracking-wide">
                 START SCREENING
               </Button>
             </motion.div>
@@ -85,28 +94,19 @@ export default function Hero() {
             variants={fadeUp}
             initial="hidden"
             animate="visible"
-            className="mt-8 flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:gap-x-6 sm:gap-y-2"
+            className="mt-8 flex flex-col items-center gap-2 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-x-6 sm:gap-y-2 md:items-start md:justify-start"
           >
             {STATUS.map((item) => (
               <li
                 key={item}
                 className="flex items-center gap-2 text-[11px] tracking-[0.12em] text-muted-foreground"
               >
-                <span className="size-1.5 rounded-full bg-cyan shadow-[0_0_8px_oklch(0.78_0.12_195_/0.7)]" aria-hidden="true" />
+                <span className="size-1.5 rounded-full bg-primary" aria-hidden="true" />
                 {item}
               </li>
             ))}
           </motion.ul>
         </div>
-
-        <motion.div
-          initial={{ opacity: 0, scale: 0.96 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-          className="relative flex w-full min-w-0 items-center justify-center lg:w-[50%] lg:max-w-[52%] lg:justify-end"
-        >
-          <Retina3D />
-        </motion.div>
       </div>
     </section>
   )

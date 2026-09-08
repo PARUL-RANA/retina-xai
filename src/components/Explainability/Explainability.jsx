@@ -19,7 +19,7 @@ export default function Explainability() {
           transition={{ duration: 0.5 }}
           className="glass relative aspect-[4/3] overflow-hidden rounded-2xl"
         >
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_48%_42%,oklch(0.4_0.1_30_/0.5),oklch(0.16_0.04_255)_58%,oklch(0.12_0.03_255))]" />
+          <div className="absolute inset-0 bg-surface-secondary" />
           <svg
             className="absolute inset-0 h-full w-full opacity-60"
             viewBox="0 0 400 300"
@@ -35,7 +35,7 @@ export default function Explainability() {
             <circle cx="210" cy="175" r="3.5" fill="oklch(0.85 0.12 90 / 0.45)" />
             <rect x="150" y="130" width="70" height="55" rx="4" stroke="oklch(0.62 0.16 290 / 0.45)" strokeDasharray="4 3" />
           </svg>
-          <div className="absolute left-4 top-4 rounded-md border border-border/70 bg-background/60 px-2.5 py-1 text-[10px] tracking-[0.16em] text-muted-foreground backdrop-blur-sm">
+          <div className="absolute left-4 top-4 rounded-md border border-border/70 bg-background px-2.5 py-1 text-[10px] tracking-[0.16em] text-muted-foreground">
             DEMO FUNDUS VIEW
           </div>
         </motion.div>

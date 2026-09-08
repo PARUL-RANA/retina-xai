@@ -31,7 +31,7 @@ export default function Navbar() {
       initial={{ y: -16, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-      className="sticky top-0 z-50 border-b border-border/80 bg-background/70 backdrop-blur-xl"
+      className="sticky top-0 z-50 border-b border-border/80 bg-background/95"
     >
       <nav
         className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8"
