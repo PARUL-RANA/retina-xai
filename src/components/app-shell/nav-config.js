@@ -1,4 +1,4 @@
-import { FileText, Home, RefreshCw, ScanEye, Smartphone, Users } from "lucide-react"
+import { FileText, Home, RefreshCw, ScanEye, Smartphone, UserRound, Users } from "lucide-react"
 
 /**
  * Authenticated app navigation.
@@ -31,6 +31,15 @@ export const APP_NAV_ITEMS = [
     icon: Users,
     title: "PATIENTS",
     mobileBottom: true,
+    phase: "mvp",
+  },
+  {
+    id: "account",
+    label: "Account",
+    to: "/app/account",
+    icon: UserRound,
+    title: "ACCOUNT",
+    mobileBottom: false,
     phase: "mvp",
   },
   {
@@ -76,6 +85,10 @@ export function getNavItemByPath(pathname) {
 
   const exact = APP_NAV_ITEMS.find((item) => item.to === pathname)
   if (exact) return exact
+
+  if (pathname === "/app/account") {
+    return APP_NAV_ITEMS.find((item) => item.id === "account")
+  }
 
   return APP_NAV_ITEMS.find((item) => item.end && pathname === item.to) ?? APP_NAV_ITEMS[0]
 }

@@ -11,20 +11,20 @@ const STATUS_CONFIG = {
   ONLINE: {
     label: "Online",
     Icon: Circle,
-    className: "text-status-success",
-    iconClassName: "fill-status-success text-status-success",
+    className: "text-[#173B3A]",
+    iconClassName: "fill-[#3F8F68] text-[#3F8F68]",
   },
   OFFLINE: {
     label: "Offline",
     Icon: Square,
-    className: "text-muted-foreground",
-    iconClassName: "text-muted-foreground",
+    className: "text-[#587270]",
+    iconClassName: "text-[#587270]",
   },
   SYNCING: {
     label: "Syncing",
     Icon: RefreshCw,
-    className: "text-status-warning",
-    iconClassName: "text-status-warning animate-spin",
+    className: "text-[#C58A3A]",
+    iconClassName: "text-[#C58A3A] animate-spin",
   },
 }
 

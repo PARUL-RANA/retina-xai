@@ -1,7 +1,7 @@
 import { ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
-export default function PatientStep({ patient, errors, onChange, onContinue }) {
+export default function PatientStep({ patient, errors, onChange, onContinue, isSaving = false }) {
   return (
     <section aria-labelledby="patient-step-heading" className="space-y-6">
       <div>
@@ -32,6 +32,25 @@ export default function PatientStep({ patient, errors, onChange, onContinue }) {
             className="flex h-12 w-full rounded-lg border border-input bg-card px-3 text-sm outline-none transition-colors placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
           />
           {errors.id && <p id="patient-id-error" className="text-sm text-destructive" role="alert">{errors.id}</p>}
+        </div>
+
+        <div className="space-y-2">
+          <label htmlFor="patient-name" className="text-sm font-medium">
+            Patient Name
+          </label>
+          <input
+            id="patient-name"
+            name="patientName"
+            type="text"
+            placeholder="Enter patient full name"
+            value={patient.patientName || ""}
+            onChange={(event) => onChange("patientName", event.target.value)}
+            autoComplete="name"
+            aria-invalid={Boolean(errors.patientName)}
+            aria-describedby={errors.patientName ? "patient-name-error" : undefined}
+            className="flex h-12 w-full rounded-lg border border-input bg-card px-3 text-sm outline-none transition-colors placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
+          />
+          {errors.patientName && <p id="patient-name-error" className="text-sm text-destructive" role="alert">{errors.patientName}</p>}
         </div>
 
         <div className="grid gap-5 sm:grid-cols-2">
@@ -73,8 +92,8 @@ export default function PatientStep({ patient, errors, onChange, onContinue }) {
           </div>
         </div>
 
-        <Button type="submit" size="lg" className="min-h-12 w-full gap-2 sm:w-auto sm:min-w-40">
-          Continue
+        <Button type="submit" size="lg" className="min-h-12 w-full gap-2 sm:w-auto sm:min-w-40" disabled={isSaving}>
+          {isSaving ? "Saving patient..." : "Continue"}
           <ArrowRight className="size-4" aria-hidden="true" />
         </Button>
       </form>

@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react"
 import { X } from "lucide-react"
 import { useNavigate } from "react-router-dom"
+import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore"
+import { auth, db } from "@/lib/firebase"
 import { Button } from "@/components/ui/button"
 import ScreeningProgress from "@/components/screening/ScreeningProgress"
 import PatientStep from "@/components/screening/PatientStep"
@@ -12,8 +14,9 @@ import { saveScreeningSession } from "@/data/screeningSession"
 export default function ScreeningWizard() {
   const navigate = useNavigate()
   const [step, setStep] = useState(1)
-  const [patient, setPatient] = useState({ id: "", age: "", diabetesDuration: "" })
+  const [patient, setPatient] = useState({ id: "", patientName: "", age: "", diabetesDuration: "" })
   const [patientErrors, setPatientErrors] = useState({})
+  const [isSavingPatient, setIsSavingPatient] = useState(false)
   const [capture, setCapture] = useState({ leftEye: null, rightEye: null })
   const [currentEye, setCurrentEye] = useState("left")
   const [quality, setQuality] = useState({
@@ -28,6 +31,7 @@ export default function ScreeningWizard() {
     saveScreeningSession({
       patient: {
         patientId: patient.id,
+        patientName: patient.patientName,
         age: patient.age,
         diabetesDuration: patient.diabetesDuration,
       },
@@ -56,26 +60,95 @@ export default function ScreeningWizard() {
     setPatientErrors((current) => ({ ...current, [field]: undefined }))
   }
 
-  function handlePatientContinue(event) {
+  async function handlePatientContinue(event) {
     event.preventDefault()
+    if (isSavingPatient) {
+      return
+    }
+
     const errors = {}
     const age = Number(patient.age)
     const diabetesDuration = Number(patient.diabetesDuration)
 
     if (!patient.id.trim()) errors.id = "Patient ID is required."
+    if (!patient.patientName || !patient.patientName.trim()) errors.patientName = "Patient name is required."
     if (!patient.age || !Number.isFinite(age) || age <= 0) errors.age = "Enter a valid positive age."
     if (!patient.diabetesDuration || !Number.isFinite(diabetesDuration) || diabetesDuration < 0) {
       errors.diabetesDuration = "Enter a valid duration of zero or more years."
     }
 
     setPatientErrors(errors)
-    if (Object.keys(errors).length === 0) setStep(2)
+    if (Object.keys(errors).length > 0) return
+
+    const authenticatedUser = auth.currentUser
+    if (!authenticatedUser) {
+      setPatientErrors((current) => ({
+        ...current,
+        form: "You must be signed in to continue.",
+      }))
+      return
+    }
+
+    const patientId = patient.id.trim()
+    const patientName = patient.patientName.trim()
+    const finalAge = Number(age)
+    const finalDiabetesDuration = Number(diabetesDuration)
+
+    setIsSavingPatient(true)
+    setPatientErrors((current) => ({ ...current, form: "" }))
+
+    try {
+      const userProfileRef = doc(db, "users", authenticatedUser.uid)
+      const userProfileSnap = await getDoc(userProfileRef)
+      const profile = userProfileSnap.exists() ? userProfileSnap.data() : null
+
+      if (!profile) {
+        throw new Error("Your profile was not found. Please sign in again.")
+      }
+
+      if (!profile.phcId) {
+        throw new Error("Your clinic profile is missing a PHC ID.")
+      }
+
+      const finalPatientPayload = {
+        patientId,
+        patientName,
+        age: finalAge,
+        diabetesDuration: finalDiabetesDuration,
+        phcId: profile.phcId,
+        createdBy: authenticatedUser.uid,
+        createdAt: serverTimestamp(),
+      }
+
+      await setDoc(doc(db, "patients", patientId), finalPatientPayload)
+      setStep(2)
+    } catch (error) {
+      setPatientErrors((current) => ({
+        ...current,
+        form: error?.message || "Unable to save patient details.",
+      }))
+    } finally {
+      setIsSavingPatient(false)
+    }
   }
 
-  function handleCapture() {
+  function handleCapture(imageDataUrl) {
+    const eyeKey = `${currentEye}Eye`
+    const image = imageDataUrl
+      ? {
+          url: imageDataUrl,
+          name: `${patient.id.trim() || "retina"}-${currentEye}-capture.jpg`,
+          type: "image/jpeg",
+        }
+      : null
+
     setCapture((current) => ({
       ...current,
-      [`${currentEye}Eye`]: { source: "camera", image: null, status: "ready" },
+      [eyeKey]: {
+        source: "camera",
+        image,
+        status: image ? "ready" : "pending",
+      },
     }))
   }
 
@@ -102,7 +175,7 @@ export default function ScreeningWizard() {
   function handleRetake() {
     const eyeKey = `${currentEye}Eye`
     const previousImage = capture[eyeKey]?.image
-    if (previousImage?.url) {
+    if (previousImage?.url?.startsWith("blob:")) {
       URL.revokeObjectURL(previousImage.url)
       objectUrlsRef.current.delete(previousImage.url)
     }
@@ -156,7 +229,16 @@ export default function ScreeningWizard() {
 
       <div key={step} className="screening-step-enter">
         {step === 1 && (
-          <PatientStep patient={patient} errors={patientErrors} onChange={handlePatientChange} onContinue={handlePatientContinue} />
+          <>
+            {patientErrors.form && <p className="mb-4 text-sm text-destructive" role="alert">{patientErrors.form}</p>}
+            <PatientStep
+              patient={patient}
+              errors={patientErrors}
+              onChange={handlePatientChange}
+              onContinue={handlePatientContinue}
+              isSaving={isSavingPatient}
+            />
+          </>
         )}
         {step === 2 && (
           <CaptureStep

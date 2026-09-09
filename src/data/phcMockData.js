@@ -9,6 +9,7 @@ export const connectivityState = "ONLINE"
 export const phcContext = {
   operatorName: "Operator",
   phcId: "PHC-004",
+  phcName: "RETINA-XAI PHC",
   pendingSyncCount: 3,
 }
 

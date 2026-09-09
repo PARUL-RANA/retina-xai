@@ -7,16 +7,23 @@ export default function ScreeningCTA() {
   return (
     <section
       aria-labelledby="screening-cta-heading"
-      className="rounded-card border border-border/80 bg-surface/45 px-5 py-6 transition-colors duration-standard ease-clinical hover:border-cyan/35 sm:px-6 sm:py-7"
+      className="relative overflow-hidden rounded-2xl border border-[#B8D8CE] bg-[#E2F0ED] px-5 py-6 shadow-[0_12px_28px_rgba(24,91,86,0.08)] sm:px-7 sm:py-8"
     >
-      <h2
-        id="screening-cta-heading"
-        className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl"
-      >
-        START NEW SCREENING
-      </h2>
-      <p className="mt-2 max-w-md text-sm leading-relaxed text-muted-foreground sm:text-base">
-        Screen a patient in a few simple steps
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p className="text-[10px] font-semibold tracking-[0.2em] text-[#287A72] uppercase">
+            READY TO SCREEN
+          </p>
+          <h2
+            id="screening-cta-heading"
+            className="mt-2 text-xl font-semibold tracking-tight text-[#173B3A] sm:text-2xl"
+          >
+            START NEW SCREENING
+          </h2>
+        </div>
+      </div>
+      <p className="mt-3 max-w-lg text-sm leading-relaxed text-[#587270] sm:text-base">
+        Screen a patient in a few simple steps with the PHC triage workflow.
       </p>
 
       <motion.div
@@ -28,7 +35,7 @@ export default function ScreeningCTA() {
           size="lg"
           nativeButton={false}
           render={<Link to="/app/screen" />}
-          className="h-12 min-h-12 w-full gap-2 px-5 text-sm font-medium tracking-wide transition-[background-color,transform] duration-standard ease-clinical sm:w-auto sm:min-w-[220px]"
+          className="h-12 min-h-12 w-full gap-2 px-5 text-sm font-semibold tracking-[0.04em] shadow-[0_6px_14px_rgba(24,91,86,0.16)] sm:w-auto sm:min-w-[230px]"
         >
           <Plus className="size-4" aria-hidden="true" />
           Start Screening

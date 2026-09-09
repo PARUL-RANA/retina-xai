@@ -1,0 +1,19 @@
+<svg width="640" height="440" viewBox="0 0 640 440" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="fundus" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(320 220) rotate(90) scale(184 250)">
+      <stop stop-color="#F3C28E"/><stop offset=".55" stop-color="#B96551"/><stop offset="1" stop-color="#703C46"/>
+    </radialGradient>
+  </defs>
+  <rect width="640" height="440" fill="#185B56"/>
+  <ellipse cx="320" cy="220" rx="250" ry="184" fill="url(#fundus)"/>
+  <ellipse cx="320" cy="220" rx="250" ry="184" stroke="#B4E1D7" stroke-opacity=".5" stroke-width="2"/>
+  <circle cx="324" cy="218" r="31" fill="#F3F6F1" fill-opacity=".7"/>
+  <g stroke="#6F3942" stroke-linecap="round" stroke-opacity=".75">
+    <path stroke-width="7" d="M324 218C257 193 202 156 128 122M324 222C254 238 185 272 111 321M331 218C398 185 458 150 525 112M333 226C407 241 477 276 542 325M317 240C296 296 291 344 300 390M342 239C369 291 386 342 390 389"/>
+    <path stroke-width="3" d="M230 176C193 163 163 143 139 128M222 265C179 280 150 299 124 321M420 173C458 158 488 136 512 119M431 265C472 278 502 300 529 321"/>
+  </g>
+  <circle cx="180" cy="161" r="6" fill="#C85F5F"/><circle cx="459" cy="168" r="6" fill="#C58A3A"/><circle cx="182" cy="290" r="6" fill="#C85F5F"/>
+  <path d="M72 64H568M72 376H568M88 48V392M552 48V392" stroke="#D3E9DD" stroke-opacity=".28" stroke-dasharray="5 9"/>
+  <rect x="26" y="24" width="176" height="34" fill="#F3F6F1" fill-opacity=".92"/>
+  <text x="42" y="46" fill="#185B56" font-family="Arial, sans-serif" font-size="11" font-weight="700" letter-spacing="2">CAPTURE / USABLE</text>
+</svg>

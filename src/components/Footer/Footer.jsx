@@ -1,22 +1,12 @@
 import { Link } from "react-router-dom"
 
-const LINKS = [
-  { label: "Home", to: "/" },
-  { label: "How It Works", to: "/#technology" },
-  { label: "Explainable AI", to: "/#explainable-ai" },
-  { label: "Research", to: "/#research" },
-  { label: "About", to: "/#about" },
-  { label: "Contact", to: "/#contact" },
-]
-
 export default function Footer() {
   return (
     <footer className="border-t border-border/60 bg-surface/30">
       <div
-        id="about"
         className="mx-auto flex max-w-7xl scroll-mt-20 flex-col gap-10 px-4 py-14 sm:px-6 lg:flex-row lg:items-start lg:justify-between lg:px-8"
       >
-        <div id="research" className="scroll-mt-20">
+        <div>
           <p className="text-sm font-semibold tracking-[0.18em] text-foreground">RETINA-XAI</p>
           <p className="mt-2 text-sm text-muted-foreground">
             Explainable Retinal Intelligence
@@ -26,20 +16,9 @@ export default function Footer() {
           </p>
         </div>
 
-        <nav id="contact" className="scroll-mt-20" aria-label="Footer">
-          <ul className="grid grid-cols-2 gap-x-10 gap-y-3 sm:grid-cols-3">
-            {LINKS.map((link) => (
-              <li key={link.label}>
-                <Link
-                  to={link.to}
-                  className="text-sm text-muted-foreground transition-colors hover:text-cyan"
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        <Link to="/login" className="inline-flex min-h-11 items-center border border-[#C9DCD5] px-4 text-xs font-semibold tracking-[0.14em] text-[#185B56] transition-colors duration-200 hover:bg-[#E2F0ED]">
+          START SCREENING
+        </Link>
       </div>
 
       <div className="border-t border-border/50 px-4 py-5 text-center text-[11px] tracking-wide text-muted-foreground/70 sm:px-6 lg:px-8">

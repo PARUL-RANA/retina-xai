@@ -1,10 +1,11 @@
 import { useState } from "react"
-import { Outlet, useLocation } from "react-router-dom"
+import { Outlet, useLocation, useNavigate } from "react-router-dom"
 import { motion } from "motion/react"
 import AppSidebar from "@/components/app-shell/AppSidebar"
 import AppTopbar from "@/components/app-shell/AppTopbar"
 import MobileBottomNav from "@/components/app-shell/MobileBottomNav"
 import { getNavItemByPath } from "@/components/app-shell/nav-config"
+import { auth, signOut } from "@/lib/firebase"
 
 /**
  * Authenticated application shell.
@@ -14,19 +15,40 @@ import { getNavItemByPath } from "@/components/app-shell/nav-config"
  */
 export default function AppShell({ connectivityStatus = "ONLINE" }) {
   const { pathname } = useLocation()
+  const navigate = useNavigate()
   const [menuPath, setMenuPath] = useState(null)
+  const [logoutPending, setLogoutPending] = useState(false)
   const menuOpen = menuPath === pathname
   const current = getNavItemByPath(pathname)
 
-  return (
-    <div className="min-h-svh overflow-x-hidden bg-background text-foreground">
-      <AppSidebar connectivityStatus={connectivityStatus} />
+  async function handleLogout() {
+    setLogoutPending(true)
+    try {
+      await signOut(auth)
+      navigate("/", { replace: true })
+    } catch (error) {
+      console.error("[LOGOUT ERROR]", error)
+      navigate("/login", { replace: true })
+    } finally {
+      setLogoutPending(false)
+    }
+  }
 
-      <div className="flex min-h-svh flex-col lg:pl-60">
+  return (
+    <div className="min-h-svh overflow-x-hidden bg-[#F3F6F1] text-[#173B3A]">
+      <AppSidebar
+        connectivityStatus={connectivityStatus}
+        onLogout={handleLogout}
+        logoutPending={logoutPending}
+      />
+
+      <div className="flex min-h-svh flex-col bg-[#F3F6F1] lg:pl-60">
         <AppTopbar
           title={current.title}
           connectivityStatus={connectivityStatus}
           menuOpen={menuOpen}
+          onLogout={handleLogout}
+          logoutPending={logoutPending}
           onMenuToggle={() =>
             setMenuPath((prev) => (prev === pathname ? null : pathname))
           }

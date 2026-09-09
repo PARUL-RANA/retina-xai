@@ -7,7 +7,7 @@ const BOTTOM_ITEMS = MVP_NAV_ITEMS.filter((item) => item.mobileBottom)
 export default function MobileBottomNav() {
   return (
     <nav
-      className="fixed inset-x-0 bottom-0 z-30 border-t border-border/70 bg-background/98 lg:hidden"
+      className="fixed inset-x-0 bottom-0 z-30 border-t border-[#C9DCD5] bg-[#F6F9F7] lg:hidden"
       aria-label="Primary mobile"
     >
       <ul className="mx-auto flex max-w-lg items-stretch justify-around px-1 pb-[env(safe-area-inset-bottom)]">
@@ -20,18 +20,18 @@ export default function MobileBottomNav() {
                 end={item.end}
                 className={({ isActive }) =>
                   cn(
-                    "relative flex min-h-12 flex-col items-center justify-center gap-1 px-1 py-2 text-[10px] font-medium tracking-[0.1em] outline-none transition-colors duration-fast",
-                    "focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring/60",
+                    "relative flex min-h-12 flex-col items-center justify-center gap-1 px-1 py-2 text-[10px] font-medium tracking-[0.1em] outline-none transition-colors duration-200 ease-in-out",
+                    "focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#3E9D96]/60",
                     isActive
-                      ? "text-foreground after:absolute after:inset-x-6 after:top-0 after:h-0.5 after:bg-cyan"
-                      : "text-muted-foreground hover:text-foreground"
+                      ? "rounded-t-xl bg-[#E2F0ED] text-[#185B56] after:absolute after:inset-x-6 after:top-0 after:h-0.5 after:rounded-full after:bg-[#3E9D96]"
+                      : "text-[#587270] hover:text-[#173B3A]"
                   )
                 }
               >
                 {({ isActive }) => (
                   <>
                     <Icon
-                      className={cn("size-5", isActive && "drop-shadow-[0_0_6px_oklch(0.78_0.12_195_/0.45)]")}
+                      className={cn("size-5", isActive && "text-[#185B56]")}
                       aria-hidden="true"
                     />
                     <span>{item.label}</span>
