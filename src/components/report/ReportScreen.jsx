@@ -74,7 +74,7 @@ export default function ReportScreen() {
     try {
       const doc = new jsPDF({ unit: "mm", format: "a4" })
       const pageWidth = doc.internal.pageSize.getWidth()
-      const pageHeight = doc.internal.pageSize.getHeight()
+      // const pageHeight = doc.internal.pageSize.getHeight()
       const margin = 14
       const primaryColor = [23, 59, 58]
       const accentColor = [22, 90, 86]
@@ -209,9 +209,9 @@ export default function ReportScreen() {
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1.35fr)_minmax(280px,0.65fr)] lg:items-start">
         <section aria-labelledby="retinal-image-heading" className="min-w-0">
           <div className="overflow-hidden rounded-[1.5rem] border border-[#C9DCD5] bg-[#E2F0ED]">
-            <div className="flex min-h-[300px] items-center justify-center bg-[#F9FBF8] px-6 py-10 text-center sm:min-h-[440px]">
+            <div className="flex min-h-75 items-center justify-center bg-[#F9FBF8] px-6 py-10 text-center sm:min-h-110">
               {report.images.original ? (
-                <img src={report.images.original} alt={`Original retinal image for patient ${report.patientId}`} className="image-appear max-h-[520px] w-full object-contain" />
+                <img src={report.images.original} alt={`Original retinal image for patient ${report.patientId}`} className="image-appear max-h-130 w-full object-contain" />
               ) : (
                 <div>
                   <p id="retinal-image-heading" className="flex items-center justify-center gap-2 text-sm font-medium tracking-[0.12em] text-muted-foreground">

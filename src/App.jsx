@@ -5,6 +5,7 @@ import Landing from "@/pages/Landing"
 import Login from "@/pages/Login"
 import Dashboard from "@/pages/Dashboard"
 import Analysis from "@/pages/Analysis"
+import AppShell from "@/components/app-shell/AppShell"
 import { auth } from "@/lib/firebase"
 import {
   PhcHomePage,
